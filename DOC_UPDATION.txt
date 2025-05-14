@@ -1,0 +1,254 @@
+You're absolutely right to double-check — the list I gave earlier was only a **short selection of the most commonly used update operators**. MongoDB supports **many more** update operators across different categories.
+
+Here’s a **complete and categorized list** of MongoDB update operators as of MongoDB 6.x:
+
+---
+
+## 🔧 **Common MongoDB Update Operators (Full List)**
+
+### 🔹 1. **Field Update Operators**
+
+| Operator       | Description                                        |
+| -------------- | -------------------------------------------------- |
+| `$set`         | Sets the value of a field                          |
+| `$unset`       | Removes the specified field                        |
+| `$rename`      | Renames a field                                    |
+| `$inc`         | Increments a numeric field                         |
+| `$mul`         | Multiplies a field by a value                      |
+| `$min`         | Updates field if value is **less than current**    |
+| `$max`         | Updates field if value is **greater than current** |
+| `$currentDate` | Sets field to current date or timestamp            |
+| `$setOnInsert` | Sets value **only when upserting**                 |
+
+---
+
+### 🔹 2. **Array Update Operators**
+
+| Operator    | Description                                           |
+| ----------- | ----------------------------------------------------- |
+| `$push`     | Adds an element to the end of an array                |
+| `$pop`      | Removes first or last element of an array             |
+| `$pull`     | Removes elements that match a condition               |
+| `$pullAll`  | Removes all matching elements from an array           |
+| `$addToSet` | Adds element only if it doesn’t already exist         |
+| `$each`     | Modifier to `$push` or `$addToSet` for multiple items |
+| `$position` | Modifies position for insert (with `$each`)           |
+| `$slice`    | Limits array length after update                      |
+| `$sort`     | Sorts array elements (with `$each`)                   |
+
+Comparison
+The following operators can be used in queries to compare values:
+
+$eq: Values are equal
+$ne: Values are not equal
+$gt: Value is greater than another value
+$gte: Value is greater than or equal to another value
+$lt: Value is less than another value
+$lte: Value is less than or equal to another value
+$in: Value is matched within an array
+$nin: not in
+Logical
+The following operators can logically compare multiple queries.
+
+$and: Returns documents where both queries match
+$or: Returns documents where either query matches
+$nor: Returns documents where both queries fail to match
+$not: Returns documents where the query does not match
+Evaluation
+The following operators assist in evaluating documents.
+
+$regex: Allows the use of regular expressions when evaluating field values
+$text: Performs a text search
+$where: Uses a JavaScript expression to match documents
+
+
+### 🔹 3. **Bitwise Update Operators**
+
+| Operator | Description                       |
+| -------- | --------------------------------- |
+| `$bit`   | Performs bitwise AND, OR, XOR ops |
+
+Example:
+
+```js
+db.mycoll.updateOne(
+  { _id: 1 },
+  { $bit: { flags: { and: 5 } } }
+)
+```
+
+---
+
+### 🔹 4. **Date Update**
+
+| Operator                        | Description                         |
+| ------------------------------- | ----------------------------------- |
+| `$currentDate`                  | Sets current date/time              |
+| `$type` (within `$currentDate`) | Specifies `"date"` or `"timestamp"` |
+
+---
+
+### 🧠 Bonus: **Combining Multiple Operators**
+
+db.students2.updateOne(
+  { name: "Karan Patel" },
+  {
+    $set: { "address.city": "Delhi" },
+    $inc: { age: 1 },
+    $addToSet: { hobbies: "photography" }
+  }
+)
+
+================================================================================================
+Great question! ✅
+
+## 🔄 `updateMany()` in MongoDB
+
+### 🔹 Purpose:
+
+`updateMany()` is used to **update all documents** that match a filter.
+
+### 📌 Syntax:
+
+```js
+db.collection.updateMany(
+  <filter>,
+  <update>,
+  { upsert: <boolean> } // optional
+)
+```
+
+---
+
+## 🧠 Are there *unique* operators for `updateMany()`?
+
+**No** — `updateMany()` uses **the exact same update operators** as `updateOne()`.
+
+* All update operators like `$set`, `$inc`, `$unset`, `$push`, `$addToSet`, etc. are fully compatible.
+* The only difference is: `updateMany()` applies the update to **all matching documents**, not just the first one.
+
+---
+
+## ✅ Example of `updateMany()`
+
+Let's say you want to:
+
+* Increase the age of all students named "Karan Patel" by 1
+* Set their course to `"BTech"` if not already set
+
+```js
+db.students2.updateMany(
+  { name: "Karan Patel" },
+  {
+    $inc: { age: 1 },
+    $set: { course: "BTech" }
+  }
+)
+```
+
+---
+
+## 🔁 Another example: Remove a field for multiple documents
+
+```js
+db.students2.updateMany(
+  { age: { $gte: 25 } },
+  { $unset: { hobbies: "" } }
+)
+```
+
+This removes the `hobbies` field from all students aged 25 or more.
+
+---
+
+## 📋 Check Update Result
+
+After running `updateMany()`, MongoDB returns:
+
+```json
+{
+  acknowledged: true,
+  matchedCount: <number>,
+  modifiedCount: <number>
+}
+================================================================================================
+Excellent follow-up! Modifying **nested objects** in MongoDB is fully supported with both `updateOne()` and `updateMany()` using **dot notation**.
+
+---
+
+## 🧩 Modifying Nested Fields — Using Dot Notation
+
+### ✅ Syntax:
+
+```js
+db.collection.updateMany(
+  { "address.city": "Delhi" },
+  { $set: { "address.zip": 110001 } }
+)
+```
+
+In this example:
+
+* We're matching all documents where `address.city` is `"Delhi"`
+* And setting the `address.zip` field to `110001`
+
+---
+
+## 🔧 Other Examples of Nested Field Updates
+
+### 🔹 1. Update a field inside a nested object
+
+```js
+db.students2.updateMany(
+  { "address.city": "Hyderabad" },
+  { $set: { "address.street": "New Street 123" } }
+)
+```
+
+---
+
+### 🔹 2. Unset a nested field
+
+```js
+db.students2.updateMany(
+  {},
+  { $unset: { "address.zip": "" } }
+)
+
+### 🔹 3. Increment a field inside a nested object
+
+```js
+db.students2.updateMany(
+  { "name": "Karan Patel" },
+  { $inc: { "address.zip": 1 } }
+)
+```
+
+---
+
+## 📁 Nested Arrays of Objects — Bonus Tip
+
+If you want to update inside **arrays of objects**, you'll need **array filters** or **positional operators** like `$[elem]` or `$`.
+
+Example:
+
+```js
+db.students2.updateMany(
+  { "grades.subject": "Math" },
+  { $set: { "grades.$.score": 90 } }
+)
+```
+
+(Assumes `grades` is an array of `{ subject, score }` objects.)
+
+==============================================================================================
+REPLACE_ONE:
+mynewdb> db.students2.replaceOne({ _id: ObjectId('6819bee726ce26139bb5f899') }, { name: "Varun dhawan",age:25 } )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+

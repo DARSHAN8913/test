@@ -1,0 +1,107 @@
+Here’s a **brief reference note** on MongoDB schema validation using `$jsonSchema` — including the `createCollection()` and `runCommand()` formats, along with a concrete example.
+
+---
+
+## 🗒️ **MongoDB Schema Validation with `$jsonSchema`**
+
+MongoDB allows you to enforce document structure using **validators** based on JSON Schema. This is useful for ensuring data consistency.
+
+---
+
+### ✅ **1. During Collection Creation – `db.createCollection()`**
+
+Use this format to add validation rules when creating a new collection.
+
+#### 🔹 Example: Creating `students2` with validation
+
+```js
+db.createCollection("students2", {
+  validator: {
+    $jsonSchema: {
+      title: "Student object validation",
+      required: ["name", "age", "course"],
+      properties: {
+        name: {
+          bsonType: "string",
+          description: "name must be string and required"
+        },
+        age: {
+          bsonType: "int",
+          minimum: 5,
+          maximum: 50,
+          description: "age must be int and between 5 to 50"
+        },
+        course: {
+          bsonType: "string",
+          enum: ["Btech", "Bsc", "BBA"],
+          description: "Course must be one of Btech, Bsc, BBA"
+        }
+      }
+    }
+  }
+})
+```
+
+---
+
+### ✅ **2. Modifying an Existing Collection – `db.runCommand({ collMod })`**
+
+Use this to **add or update** validation rules on an existing collection.
+
+#### 🔹 Example: Modify `students2` to include `hobbies` and `address`
+
+```js
+db.runCommand({
+  collMod: "students2",
+  validator: {
+    $jsonSchema: {
+      title: "Student with Address",
+      required: ["name", "age"],
+      properties: {
+        name: {
+          bsonType: "string",
+          description: "name must be string"
+        },
+        age: {
+          bsonType: "int",
+          minimum: 5,
+          description: "age must be int and minimum 5"
+        },
+        hobbies: {
+          bsonType: "array",
+          items: { bsonType: "string" },
+          description: "hobbies must be an array of strings"
+        },
+        address: {
+          bsonType: "object",
+          required: ["street", "zip", "city"],
+          properties: {
+            street: { bsonType: "string", description: "street must be a string" },
+            zip: { bsonType: "int", description: "zip must be an integer" },
+            city: { bsonType: "string", description: "city must be a string" }
+          },
+          description: "address must be an object with street, zip, and city"
+        }
+      }
+    }
+  }
+});
+```
+
+---
+
+### ✅ Sample Valid Document:
+
+```js
+db.students2.insertOne({
+  name: "Karan Patel",
+  age: 23,
+  hobbies: ["guitar", "cycling"],
+  address: {
+    street: "5th Avenue",
+    zip: 560001,
+    city: "Bengaluru"
+  }
+})
+```
+

@@ -1,0 +1,72 @@
+db.createCollection("students2",{
+    validator: {
+     $jsonSchema:{
+        title:"Student object validation",
+        required: ["name", "age", "course"],
+         properties:{
+              name:{
+                 bsonType:"string",
+         description: "name must be string and required"      
+         },
+         age:{
+         bsonType:"int",
+         minimum:5,maximum:50,
+         description: "age must be int and between 5 to 50"	
+         },
+         course:{
+         bsonType:"string",
+         enum:["Btech","Bsc","BBA"],
+         description:"Course must be string and should be either Btech,Bsc,BBA "
+                }
+           }	
+       }	
+    }
+ })
+
+ db.runCommand({
+    collMod: "students2",
+    validator: {
+      $jsonSchema: {
+        title: "Student with Address",
+        required: ["name", "age"],
+        properties: {
+          name: {
+            bsonType: "string",
+            description: "name must be string"
+          },
+          age: {
+            bsonType: "int",
+            minimum: 5,
+            description: "age must be int and minimum 5"
+          },
+          hobbies: {
+            bsonType: "array",
+            items: {
+              bsonType: "string"
+            },
+            description: "hobbies must be an array of strings"
+          },
+          address: {
+            bsonType: "object",
+            required: ["street", "zip", "city"],
+            properties: {
+              street: {
+                bsonType: "string",
+                description: "street must be a string"
+              },
+              zip: {
+                bsonType: "int",
+                description: "zip must be an integer"
+              },
+              city: {
+                bsonType: "string",
+                description: "city must be a string"
+              }
+            },
+            description: "address must be a object"
+          }
+        }
+      }
+    }
+  });
+  

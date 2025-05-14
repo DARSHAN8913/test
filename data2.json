@@ -1,0 +1,77 @@
+agh:[   name: 'Ayesha Khan',
+  { age: 22,
+    _id: ObjectId('6819b6805004742675b5f899'),
+    name: 'Rahul Sharma',
+    age: 21,
+    course: 'Btech'681aff08d88c78ba11b5f89a'),
+  },{name: 'Rohit Verma',
+  { age: 20,
+    _id: ObjectId('6819baf15004742675b5f89b'),
+    name: 'Sneha Mehra',
+    age: 19,
+    hobbies: [ 'reading', 'painting', 'traveling' ]
+  },name: 'Meera Nair',
+  { age: 24
+    _id: ObjectId('6819bee726ce26139bb5f899'),
+    name: 'Varun dhawan',
+    age: 25jectId('681aff08d88c78ba11b5f89c'),
+  },name: 'Aditya Singh',
+  { age: 26,
+    _id: ObjectId('6819beee26ce26139bb5f89a'),
+    name: 'Karan Patel',Park Street', zip: 110001, city: 'Delhi' }
+    age: 23,
+    hobbies: [ 'guitar', 'cycling' ],
+    address: { street: '5th Avenue', zip: 560001, city: 'Bengaluru' }
+  },name: 'Nikita Joshi',
+  { age: 21,
+    _id: ObjectId('681aff08d88c78ba11b5f899'),
+    name: 'Ayesha Khan',, 'volunteering' ]
+    age: 22,
+    course: 'BSc Computer Science'
+  },_id: ObjectId('681aff08d88c78ba11b5f89e'),
+  { name: 'Imran Shaikh',
+    _id: ObjectId('681aff08d88c78ba11b5f89a'),
+    name: 'Rohit Verma',MG Road', zip: 400001, city: 'Mumbai' }
+    age: 20,
+    hobbies: [ 'cricket', 'gaming', 'music' ]
+  },_id: ObjectId('681aff08d88c78ba11b5f89f'),
+  { name: 'Pooja Reddy',
+    _id: ObjectId('681aff08d88c78ba11b5f89b'),
+    name: 'Meera Nair',
+    age: 24: [ 'singing' ]
+  },
+  {
+    _id: ObjectId('681aff08d88c78ba11b5f89c'),
+    name: 'Aditya Singh',
+    age: 26,
+    hobbies: [ 'photography', 'blogging' ],
+    address: { street: 'Park Street', zip: 110001, city: 'Delhi' }
+  },
+  {
+    _id: ObjectId('681aff08d88c78ba11b5f89d'),
+    name: 'Nikita Joshi',
+    age: 21,
+    course: 'BA Psychology',
+    hobbies: [ 'dancing', 'volunteering' ]
+  },
+  {
+    _id: ObjectId('681aff08d88c78ba11b5f89e'),
+    name: 'Imran Shaikh',
+    age: 28,
+    address: { street: 'MG Road', zip: 400001, city: 'Mumbai' }
+  },
+  {
+    _id: ObjectId('681aff08d88c78ba11b5f89f'),
+    name: 'Pooja Reddy',
+    age: 18,
+    course: 'BCom',
+    hobbies: [ 'singing' ]
+  },
+  {
+    _id: ObjectId('681aff08d88c78ba11b5f8a0'),
+    name: 'Anuj Mehta',
+    age: 23,
+    course: 'MBA',
+    address: { street: 'Lake View', zip: 700029, city: 'Kolkata' }
+  }
+]

@@ -1,0 +1,77 @@
+show dbs  	  		//for viewing all databases
+show collections 	       // for viewing collections
+db.COLLECNAME.drop()  		// for deletion of a collection
+db.dropDatabase()  		// for deletion of all collections/entire db in current db
+" "  "     " .find()		//for listing all docs of a "  "
+"  "  "	 "  ".rename("")	// for renaming a collection
+"  "  "	 "  ".insertOne({})	// for inserting new document
+"  "  "	 "  ".insertMany([])	// for "  "  "	 "  "  docs
+db.createCollection("")		// to create a new collection
+
+db.DATETIME.insertOne({now:new Date()})  // for current time saving
+
+db.DATETIME.insertOne({dob:ISODate("YYYY-MM-DDTHH:MM:SSZ")})  //T seperates the date and time and Z specifies the time format i.e UTC and if not provided then format is set to the local system time zone and in that place we can also specify time zones like +05:30 for mumbai  
+
+You can specify either of the following formats:
+
+Date() returns the current date as a string in mongosh.
+
+new Date() returns the current date as a Date object. mongosh wraps the Date object with the ISODate helper. The ISODate is in UTC.
+
+You can specify a particular date by passing an ISO-8601 date string with a year within the inclusive range 0 through 9999 to the new Date() constructor or the ISODate() function.
+
+===============================================================================================
+For Docs deletion
+db.colname.deleteOne({filter})
+db.colname.deleteMany({filter})
+==============================================================================================
+For searching docs:
+// if filter not specified then it will return all the docs
+db.colname.findOne({filter},{field_selection or projection})
+db.colname.find({filter},{field_selection or projection})
+db.colname.find({filter}).projection({field:0})  // 0 to exclude,1 to include
+db.colname.find({filter},{field_selection or projection}).count()
+db.colname.find().sort(field:1)       //1 for ascending, -1 for desc applies for both numbers and strings
+db.colname.find().limit(n)            // shows n docs only
+mynewdb> db.students2.find({},{_id:0,name:1})
+[
+  { name: 'Rahul Sharma' },
+  { name: 'Sneha Mehra' },
+  { name: 'Varun dhawan' },
+  { name: 'Karan Patel' },
+  { name: 'Ayesha Khan' },
+  { name: 'Rohit Verma' },
+  { name: 'Meera Nair' },
+  { name: 'Aditya Singh' },
+  { name: 'Nikita Joshi' },
+  { name: 'Imran Shaikh' },
+  { name: 'Pooja Reddy' },
+  { name: 'Anuj Mehta' }
+]
+mynewdb> db.students2.find({},{_id:0,name:1}).limit(5)
+[
+  { name: 'Rahul Sharma' },
+  { name: 'Sneha Mehra' },
+  { name: 'Varun dhawan' },
+  { name: 'Karan Patel' },
+  { name: 'Ayesha Khan' }
+]
+mynewdb> db.students2.find({},{_id:0,name:1}).limit(5).skip(2)
+[
+  { name: 'Varun dhawan' },
+  { name: 'Karan Patel' },
+  { name: 'Ayesha Khan' },
+  { name: 'Rohit Verma' },
+  { name: 'Meera Nair' }
+]
+mynewdb> db.students2.find({},{_id:0,name:1}).skip(2).limit(5)
+[
+  { name: 'Varun dhawan' },
+  { name: 'Karan Patel' },
+  { name: 'Ayesha Khan' },
+  { name: 'Rohit Verma' },
+  { name: 'Meera Nair' }
+]                                                     //hence .limit(5).skip(2) are interchanable but preferred skip first
+===============================================================================================
+
+
